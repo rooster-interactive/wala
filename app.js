@@ -3,7 +3,7 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var estafetaRouter = require('./routes/estafeta');
+var trackingRouter = require('./routes/tracking');
 
 var app = express();
 
@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/estafeta', estafetaRouter);
+app.use('/track', trackingRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
