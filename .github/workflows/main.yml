@@ -1,0 +1,25 @@
+name: Main workflow
+
+on:
+  pull_request:
+  push:
+    branches:
+      - develop
+      - master
+      - releases/*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Clear tool cache
+        run: rm -rf $RUNNER_TOOL_CACHE/*
+      - name: Setup node 12
+        uses: ./
+        with:
+          node-version: 12.x
+      - name: Build project
+        run: npm run build
+      - name: Verify node and npm
+        run: npm run rest
