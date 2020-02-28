@@ -9,16 +9,11 @@ on:
       - releases/*
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Clear tool cache
-        run: rm -rf $RUNNER_TOOL_CACHE/*
-      - name: Setup node 12
-        uses: ./
+      - uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - name: Build project
-        run: npm run build
-      - name: Verify node and npm
-        run: npm run rest
+      - uses: actions/checkout@v2
+      - run: npm run rest
