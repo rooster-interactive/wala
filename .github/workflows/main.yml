@@ -16,4 +16,4 @@ jobs:
         with:
           node-version: 12.x
       - uses: actions/checkout@v2
-      - run: npm run rest
+      - run: npm run test
