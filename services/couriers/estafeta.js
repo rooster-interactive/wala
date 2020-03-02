@@ -1,5 +1,5 @@
 const soap = require('soap');
-const url = process.env.IS_PRODUCTION === "true"
+const url = String(process.env.IS_PRODUCTION) === "true"
     ? 'https://tracking.estafeta.com/Service.asmx?wsdl'
     : 'https://trackingqa.estafeta.com/Service.asmx?wsdl';
 
