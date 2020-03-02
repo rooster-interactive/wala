@@ -1,66 +1,77 @@
 const soap = require('soap');
 const url = 'https://tracking.estafeta.com/Service.asmx?wsdl';
 
-function Estafeta(subscriber, login, password) {
-    this.SubscriberId = subscriber;
-    this.login = login;
-    this.password = password;
-};
+class Estafeta {
 
-Estafeta.prototype.wayBillRange = function (initialWayBill = '', finalWaybill = '') {
-    return {
-        initialWayBill: initialWayBill,
-        finalWaybill: finalWaybill
+    constructor() {
+        this.subscriberId = process.env.ESTAFETA_SUSCRIBER_ID;
+        this.login = process.env.ESTAFETA_USER;
+        this.password = process.env.ESTAFETA_PASSWORD;
+    }
+
+    wayBillRange(initialWayBill = '', finalWaybill = '') {
+        return {
+            initialWayBill: initialWayBill,
+            finalWaybill: finalWaybill
+        };
     };
-};
 
-Estafeta.prototype.waybillList = function (billType = 'R', wayBills = []) {
-    return {
-        waybillType: billType,
-        waybills: wayBills
-    }
-};
+    waybillList(billType = 'R', wayBills = []) {
+        return {
+            waybillType: billType,
+            waybills: wayBills
+        }
+    };
 
-Estafeta.prototype.searchType = function (type = 'L') {
-    return {
-        waybillRange: this.wayBillRange(),
-        waybillList: this.waybillList(),
-        type: type
-    }
-};
+    searchType(type = 'L') {
+        return {
+            waybillRange: wayBillRange(),
+            waybillList: waybillList(),
+            type: type
+        }
+    };
 
-Estafeta.prototype.historyConfiguration = function (include = 1, configuration = 'ALL') {
-    return {
-        includeHistory: include,
-        historyConfiguration: configuration
-    }
-};
+    historyConfiguration(include = 1, configuration = 'ALL') {
+        return {
+            includeHistory: include,
+            historyConfiguration: configuration
+        }
+    };
 
-Estafeta.prototype.filter = function (information = 0, type = 'DELIVERED') {
-    return {
-        filterInformation: information,
-        filterType: type
-    }
-};
+    filter(information = 0, type = 'DELIVERED') {
+        return {
+            filterInformation: information,
+            filterType: type
+        }
+    };
 
-Estafeta.prototype.searchConfiguration = function (dimensions = 1, wayBillReplaceData = 0, returnDocumentData = 0, multipleServiceData = 0, internationalData = 0, signature = 0, customerInfo = 1) {
-    return {
-        includeDimensions: dimensions,
-        includeWaybillReplaceData: wayBillReplaceData,
-        includeReturnDocumentData: returnDocumentData,
-        includeMultipleServiceData: multipleServiceData,
-        includeInternationalData: internationalData,
-        includeSignature: signature,
-        includeCustomerInfo: customerInfo,
-        historyConfiguration: this.historyConfiguration(),
-        filterType: this.filter(),
-    }
-};
+    searchConfiguration(dimensions = 1, wayBillReplaceData = 0, returnDocumentData = 0, multipleServiceData = 0, internationalData = 0, signature = 0, customerInfo = 1) {
+        return {
+            includeDimensions: dimensions,
+            includeWaybillReplaceData: wayBillReplaceData,
+            includeReturnDocumentData: returnDocumentData,
+            includeMultipleServiceData: multipleServiceData,
+            includeInternationalData: internationalData,
+            includeSignature: signature,
+            includeCustomerInfo: customerInfo,
+            historyConfiguration: this.historyConfiguration(),
+            filterType: this.filter(),
+        }
+    };
 
-Estafeta.prototype.getTracking = function () {
-    soap.createClient(url, function (err, client) {
-    })
-};
+    getTracking() {
+        soap.createClient(url, (err, client) => {
+            client.ExecuteQuery({
+                'suscriberId': this.subscriberId,
+                'login': this.login,
+                'password': this.password,
+                'searchType': this.searchType(),
+                'searchConfiguration': this.searchConfiguration()
+            }, (err, result) => {
+                console.info(result);
+            })
+        })
+    };
+}
 
-
-module.exports = Estafeta;
+export {Estafeta};
