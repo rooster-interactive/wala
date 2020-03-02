@@ -10,13 +10,13 @@ const supportedCouriers = ['estafeta'];
 router.get('/', [
   check('courier').isIn(supportedCouriers),
   check('tracking_code').exists(),
-], (req, res, next) => {
+], async (req, res, next) => {
   try {
     validationResult(req).throw();
 
     let tracking = new Track(req.query.courier, req.query.tracking_code);
     
-    tracking.retrieveHistory();
+    await tracking.retrieveHistory();
     let err = false;
 
     if(err){
