@@ -1,76 +1,91 @@
 const soap = require('soap');
-const url = 'https://tracking.estafeta.com/Service.asmx?wsdl';
+const url = process.env.IS_PRODUCTION
+    ? 'https://tracking.estafeta.com/Service.asmx?wsdl'
+    : 'https://trackingqa.estafeta.com/Service.asmx?wsdl';
 
 class Estafeta {
 
-    constructor() {
-        this.subscriberId = process.env.ESTAFETA_SUSCRIBER_ID;
+    constructor(bill = 0) {
+        this.suscriberId = process.env.ESTAFETA_SUSCRIBER_ID;
         this.login = process.env.ESTAFETA_USER;
         this.password = process.env.ESTAFETA_PASSWORD;
+        this.waybillList(null, bill)
     }
 
     wayBillRange(initialWayBill = '', finalWaybill = '') {
         return {
-            initialWayBill: initialWayBill,
-            finalWaybill: finalWaybill
+            "est:initialWayBill": initialWayBill,
+            "est:finalWaybill": finalWaybill
         };
     };
 
-    waybillList(billType = 'R', wayBills = []) {
+    waybillList(billType = 'G', bills = 0) {
         return {
-            waybillType: billType,
-            waybills: wayBills
+            "est:waybillType": billType,
+            "est:waybills": {
+                "est:string": bills
+            }
         }
     };
 
     searchType(type = 'L') {
         return {
-            waybillRange: wayBillRange(),
-            waybillList: waybillList(),
-            type: type
+            "est:waybillRange": this.wayBillRange(),
+            "est:waybillList": this.waybillList(),
+            "est:type": type
         }
     };
 
     historyConfiguration(include = 1, configuration = 'ALL') {
         return {
-            includeHistory: include,
-            historyConfiguration: configuration
+            "est:includeHistory": include,
+            "est:historyConfiguration": configuration
         }
     };
 
     filter(information = 0, type = 'DELIVERED') {
         return {
-            filterInformation: information,
-            filterType: type
+            "est:filterInformation": information,
+            "est:filterType": type
         }
     };
 
     searchConfiguration(dimensions = 1, wayBillReplaceData = 0, returnDocumentData = 0, multipleServiceData = 0, internationalData = 0, signature = 0, customerInfo = 1) {
         return {
-            includeDimensions: dimensions,
-            includeWaybillReplaceData: wayBillReplaceData,
-            includeReturnDocumentData: returnDocumentData,
-            includeMultipleServiceData: multipleServiceData,
-            includeInternationalData: internationalData,
-            includeSignature: signature,
-            includeCustomerInfo: customerInfo,
-            historyConfiguration: this.historyConfiguration(),
-            filterType: this.filter(),
+            "est:includeDimensions": dimensions,
+            "est:includeWaybillReplaceData": wayBillReplaceData,
+            "est:includeReturnDocumentData": returnDocumentData,
+            "est:includeMultipleServiceData": multipleServiceData,
+            "est:includeInternationalData": internationalData,
+            "est:includeSignature": signature,
+            "est:includeCustomerInfo": customerInfo,
+            "est:historyConfiguration": this.historyConfiguration(),
+            "est:filterType": this.filter(),
         }
     };
 
-    getTracking() {
-        soap.createClient(url, (err, client) => {
-            client.ExecuteQuery({
-                'suscriberId': this.subscriberId,
-                'login': this.login,
-                'password': this.password,
-                'searchType': this.searchType(),
-                'searchConfiguration': this.searchConfiguration()
-            }, (err, result) => {
-                console.info(result);
-            })
-        })
+    async getTracking() {
+        let data = {
+            "est:suscriberId": this.suscriberId,
+            "est:login": this.login,
+            "est:password": this.password,
+            "est:searchType": this.searchType(),
+            "est:searchConfiguration": this.searchConfiguration()
+        };
+        let result;
+        try {
+            result = await soap.createClientAsync(url,)
+                .then((client) => {
+                    return client.ExecuteQueryAsync(data);
+                });
+
+            console.log(data, result);
+
+        } catch (e) {
+            console.error(e);
+        }
+        return result;
+
     };
 }
 

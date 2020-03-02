@@ -31,8 +31,11 @@ Track.prototype.getValidStatus = function () {
 Track.prototype.retrieveHistory = function () {
     switch (this.courier) {
         case 'estafeta':
-            let client = new Estafeta(25, 'Usuario1', '1GCvGIu$');
+            let client = new Estafeta(this.tracking_code);
             client.getTracking();
+            //for(let event of client.getTracking()){
+            //    this.addEvent(event)
+            //}
             break;
     }
 };
