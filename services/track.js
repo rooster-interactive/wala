@@ -28,14 +28,15 @@ Track.prototype.getValidStatus = function () {
     ]
 };
 
-Track.prototype.retrieveHistory = function () {
+Track.prototype.retrieveHistory = async function () {
     switch (this.courier) {
         case 'estafeta':
             let client = new Estafeta(this.tracking_code);
-            client.getTracking();
-            //for(let event of client.getTracking()){
-            //    this.addEvent(event)
-            //}
+            let response = await client.getTracking();
+            console.log(response);
+            for(let event of response){
+               this.addEvent(new Date(event.eventDateTime), event.eventDescriptionSPA)
+            }
             break;
     }
 };
