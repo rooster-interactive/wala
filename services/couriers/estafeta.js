@@ -39,7 +39,7 @@ class Estafeta {
     historyConfiguration(include = 1, configuration = 'ALL') {
         return {
             "est:includeHistory": include,
-            "est:historyConfiguration": configuration
+            "est:historyType": configuration
         }
     };
 
