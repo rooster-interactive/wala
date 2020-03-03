@@ -9,7 +9,7 @@ describe('Tracking endpoints', () => {
                 courier: "estafeta",
                 tracking_code: '12345l',
             });
-        expect(res.statusCode).toEqual(200)
+        expect(res.statusCode).toEqual(200);
         expect(res.body).toHaveProperty('status');
         expect(res.body).toHaveProperty('data');
         expect(res.body).toHaveProperty('message')
