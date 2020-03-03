@@ -28,7 +28,7 @@ router.get('/', [
     res.status(200).json(response);
   } catch (err) {
     res.status(422).json(err);
-  }
+}
 });
 
 module.exports = router;
