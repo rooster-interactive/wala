@@ -34,3 +34,5 @@ router.get('/', [
         res.status(422).json(err);
     }
 });
+
+module.exports = router;
