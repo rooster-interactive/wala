@@ -1,6 +1,6 @@
 import {Estafeta} from './quoting/estafeta';
 
-function Track(zip_code_ori, zip_code_dest, weight, large, height, width) {
+function Quote(courier ,zip_code_ori, zip_code_dest, weight, large, height, width) {
     this.courier = courier;
     this.zip_code_ori = zip_code_ori;
     this.zip_code_dest = zip_code_dest;
@@ -12,14 +12,14 @@ function Track(zip_code_ori, zip_code_dest, weight, large, height, width) {
     console.log(this);
 }
 
-Track.prototype.addEvent = function (date, description) {
+Quote.prototype.addEvent = function (date, description) {
     this.events.push({
         date: date,
         description: description
     });
 };
 
-Track.prototype.getValidStatus = function () {
+Quote.prototype.getValidStatus = function () {
     return [
         'created',
         'picked',
@@ -30,11 +30,11 @@ Track.prototype.getValidStatus = function () {
     ]
 };
 
-Track.prototype.retrieveHistory = async function () {
+Quote.prototype.retrieveHistory = async function () {
     switch (this.courier) {
         case 'estafeta':
-            let client = new Estafeta(this.tracking_code);
-            let response = await client.getTracking();
+            let client = new Estafeta(this.zip_code_ori, this.zip_code_dest, this.weight, this.large, this.height, this.width);
+            let response = await client.getQuote();
             console.log(response);
             for(let event of response){
                 this.addEvent(new Date(event.eventDateTime), event.eventDescriptionSPA)
@@ -43,4 +43,4 @@ Track.prototype.retrieveHistory = async function () {
     }
 };
 
-module.exports = Track;
+module.exports = Quote;
