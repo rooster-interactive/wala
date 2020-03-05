@@ -48,6 +48,7 @@ router.post('/', [
             destination_country_id, effective_date, return_document, quadrant, cost_center,
             origin_info, destination_info
         } = req.query;
+
         let label = new Label(courier, content, content_description, customer_number, weight, delivery_estafeta_office,
             destination_country_id, effective_date, return_document, quadrant, cost_center,
             origin_info, destination_info);

@@ -2,12 +2,18 @@ import {Estafeta} from './label/estafeta';
 
 function Label() {
     this.courier = courier;
-    this.zip_code_ori = zip_code_ori;
-    this.zip_code_dest = zip_code_dest;
+    this.content = content;
+    this.content_description = content_description;
+    this.customer_number = customer_number;
     this.weight = weight;
-    this.large = large;
-    this.height = height;
-    this.width = width;
+    this.delivery_estafeta_office = delivery_esatfeta_office;
+    this.destination_country_id = destination_country_id;
+    this.effective_date;
+    this.return_document;
+    this.quadrant;
+    this.cost_center;
+    this.origin_info;
+    this.destination_info;
 
     console.log(this);
 }
