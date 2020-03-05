@@ -8,50 +8,51 @@ const supportedCouriers = ['estafeta'];
 
 router.post('/', [
     check('courier').isIn(supportedCouriers),
-    check('weight').exists().isNumeric(),
+    check('weight').exists().isFloat(),
     check('content').exists().isString(),
-    check('content-description').isString().optional({nullable: true}),
-    check('customerNumber').isNumeric().optional({nullable: true}),
-    check('delivery-estafeta-office').isBoolean(),
-    check('destination-country-id').isAlpha().optional({nullable: true}),
-    check('effective-date').isString().optional({nullable: true}),
-    check('return-document').isBoolean().optional({nullable: true}),
+    check('content_description').isString().optional({nullable: true}),
+    check('customer_number').isNumeric().optional({nullable: true}).isLength({min: 7}),
+    check('delivery_estafeta_office').isBoolean().optional({nullable: true}),
+    check('destination_country_id').isAlpha().optional({nullable: true}),
+    check('effective_date').isAlpha().optional({nullable: true}).isLength({min: 5}),
+    check('return_document').isBoolean().optional({nullable: true}),
     check('quadrant').isNumeric().optional({nullable: true}),
-    check('cost-center').isString().optional({nullable: true}),
-    check('origin-info').custom(value => {
-        value.address1.isString().exists();
-        value.address2.isString().optional({nullable: true});
-        value.cellphone.isNumeric().optional({nullable: true});
-        value.city.isString().exists();
-        value.contactName.isString().exists();
-        value.corporateName.isString().optional({nullable: true});
-        value.customerNumber.isNumeric().optional({nullable: true});
-        value.neighborhood.isString().exists();
-        value.phoneNumber.isNumeric().optional({nullable: true});
-        value.state.isString().exists();
-        value.zipCode.isString().exists();
-    }),
-    check('destination-info').custom(value => {
-        value.address1.isString().exists();
-        value.address2.isString().optional({nullable: true});
-        value.cellphone.isNumeric().optional({nullable: true});
-        value.city.isString().exists();
-        value.contactName.isString().exists();
-        value.corporateName.isString().optional({nullable: true});
-        value.customerNumber.isNumeric().optional({nullable: true});
-        value.neighborhood.isString().exists();
-        value.phoneNumber.isNumeric().optional({nullable: true});
-        value.state.isString().exists();
-        value.zipCode.isString().exists();
-    })
+    check('cost_center').isAlpha().optional({nullable: true}),
+    check('origin_info.address1').isString().exists(),
+    check('origin_info.address2').isString().optional({nullable: true}),
+    check('origin_info.cellphone').isNumeric().exists().isLength({min: 10}),
+    check('origin_info.city').isString().exists(),
+    check('origin_info.contact').isString().exists(),
+    check('origin_info.corporate_name').isString().optional({nullable: true}),
+    check('origin_info.neighborhood').isString().exists(),
+    check('origin_info.phone_number').isNumeric().optional({nullable: true}).isLength({min: 8}),
+    check('origin_info.state').isString().exists(),
+    check('origin_info.zip_code').isString().exists().isLength({min: 3}),
+    check('destination_info.address1').isString().exists(),
+    check('destination_info.address2').isString().optional({nullable: true}),
+    check('destination_info.cellphone').isNumeric().exists().isLength({min: 10}),
+    check('destination_info.city').isString().exists(),
+    check('destination_info.contact').isString().exists(),
+    check('destination_info.corporate_name').isString().optional({nullable: true}),
+    check('destination_info.neighborhood').isString().exists(),
+    check('destination_info.phone_number').isNumeric().optional({nullable: true}).isLength({min: 8}),
+    check('destination_info.state').isString().exists(),
+    check('destination_info.zip_code').isString().exists().isLength({min: 3}),
+
 ], async (req, res, next) => {
     try {
         validationResult(req).throw();
 
-        let label = new Label(req.query.courier, req.query.zip_cade_ori, req.query.zip_cade_dest, req.query.weight,
-            req.query.large, req.query.height, req.query.width);
+        let {
+            courier, content, content_description, customer_number, weight, delivery_estafeta_office,
+            destination_country_id, effective_date, return_document, quadrant, cost_center,
+            origin_info, destination_info
+        } = req.query;
+        let label = new Label(courier, content, content_description, customer_number, weight, delivery_estafeta_office,
+            destination_country_id, effective_date, return_document, quadrant, cost_center,
+            origin_info, destination_info);
 
-        await label.getLabel();
+        await Label.getLabel();
         let err = false;
 
         if (err) {

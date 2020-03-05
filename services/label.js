@@ -34,8 +34,8 @@ Label.prototype.retrieveHistory = async function () {
     switch (this.courier) {
         case 'estafeta':
             let client = new Estafeta(this.zip_code_ori, this.zip_code_dest, this.weight, this.large, this.height, this.width);
-            client.originInfo();
             client.destinationInfo();
+            client.originInfo();
             let response = await client.getLabel();
             console.log(response);
             for (let event of response) {
