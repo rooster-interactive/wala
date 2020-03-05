@@ -5,6 +5,7 @@ var logger = require('morgan');
 
 var trackingRouter = require('./routes/tracking');
 var quotingRouter = require('./routes/quoting');
+var labelRouter = require('./routes/label');
 
 var app = express();
 
@@ -15,6 +16,7 @@ app.use(cookieParser());
 
 app.use('/track', trackingRouter);
 app.use('/quote', quotingRouter);
+app.use('/label', labelRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
