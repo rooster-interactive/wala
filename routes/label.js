@@ -47,13 +47,14 @@ router.post('/', [
             courier, content, content_description, customer_number, weight, delivery_estafeta_office,
             destination_country_id, effective_date, return_document, quadrant, cost_center,
             origin_info, destination_info
-        } = req.query;
+        } = req.body;
+
 
         let label = new Label(courier, content, content_description, customer_number, weight, delivery_estafeta_office,
             destination_country_id, effective_date, return_document, quadrant, cost_center,
             origin_info, destination_info);
 
-        await Label.getLabel();
+        await label.retrieveHistory();
         let err = false;
 
         if (err) {
