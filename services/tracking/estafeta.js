@@ -80,6 +80,7 @@ class Estafeta {
             .then((client) => {
                 return client.ExecuteQueryAsync(data);
             });
+          console.log(result);
         } catch (e) {
             console.error(e);
         }

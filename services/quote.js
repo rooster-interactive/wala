@@ -1,6 +1,9 @@
 import {Estafeta} from './quoting/estafeta';
 
-function Quote(courier, zip_code_ori, zip_code_dest, weight, large, height, width) {
+function Quote(suscriber_id, login, password, courier, zip_code_ori, zip_code_dest, weight, large, height, width) {
+    this.suscriber_id = suscriber_id;
+    this.login = login;
+    this.password = password;
     this.courier = courier;
     this.zip_code_ori = zip_code_ori;
     this.zip_code_dest = zip_code_dest;
@@ -8,38 +11,31 @@ function Quote(courier, zip_code_ori, zip_code_dest, weight, large, height, widt
     this.large = large;
     this.height = height;
     this.width = width;
-
-    console.log(this);
+    this.response = {};
 }
 
-Quote.prototype.addEvent = function (date, description) {
-    this.events.push({
-        date: date,
-        description: description
-    });
+/**
+ *
+ * @param response
+ */
+Quote.prototype.setResponse = function (response) {
+    this.response = response
 };
 
-Quote.prototype.getValidStatus = function () {
-    return [
-        'created',
-        'picked',
-        'in_movement',
-        'with_delivery_man',
-        'failed_deliver',
-        'delivered'
-    ]
-};
-
+/**
+ *
+ * @returns {Promise<string>}
+ */
 Quote.prototype.retrieveHistory = async function () {
     switch (this.courier) {
         case 'estafeta':
-            let client = new Estafeta(this.zip_code_ori, this.zip_code_dest, this.weight, this.large, this.height, this.width);
+            let client = new Estafeta(this.suscriber_id, this.login, this.password, this.zip_code_ori,
+                this.zip_code_dest, this.weight, this.large, this.height, this.width);
             let response = await client.getQuote();
-            console.log(response);
-            for (let event of response) {
-                this.addEvent(new Date(event.eventDateTime), event.eventDescriptionSPA)
-            }
+            this.setResponse(response);
             break;
+        default:
+            return 'no existe ese servicio';
     }
 };
 

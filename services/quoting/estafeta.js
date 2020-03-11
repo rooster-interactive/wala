@@ -1,14 +1,14 @@
 const soap = require('soap');
 const url = String(process.env.IS_PRODUCTION) === "true"
-    ? 'http://frecuenciacotizador.estafeta.com/Service.asmx?wsdl'
-    : 'http://frecuenciacotizadorqa.estafeta.com/Service.asmx?wsdl';
+    ? 'https://frecuenciacotizador.estafeta.com/Service.asmx?wsdl'
+    : 'https://frecuenciacotizadorqa.estafeta.com/Service.asmx?wsdl';
 
 class Estafeta {
 
-    constructor(zip_code_ori, zip_code_dest, weight, large, height, width) {
-        this.suscriberId = process.env.ESTAFETA_SUSCRIBER_ID;
-        this.login = process.env.ESTAFETA_USER;
-        this.password = process.env.ESTAFETA_USER;
+    constructor(suscriber_id, login, password,zip_code_ori, zip_code_dest, weight, large, height, width) {
+        this.suscriberId = suscriber_id;
+        this.login = login;
+        this.password = password;
         this.weight = weight;
         this.large = large;
         this.height = height;
@@ -25,17 +25,17 @@ class Estafeta {
             contra: this.password,
             esFrecuencia: false,
             esLista: true,
-            TipoEnvio: {
+            tipoEnvio: {
                 EsPaquete: true,
-                peso: this.weight,
-                largo: this.large,
-                alto: this.height,
-                ancho: this.width
+                Peso: this.weight,
+                Largo: this.large,
+                Alto: this.height,
+                Ancho: this.width
             },
-            ListaOrigen: {
+            datosOrigen: {
                 string: this.zip_code_ori
             },
-            ListaDestino: {
+            datosDestino: {
                 string: this.zip_code_dest
             }
         };
@@ -48,7 +48,7 @@ class Estafeta {
         } catch (e) {
             console.error(e);
         }
-        return result;
+        return result[0].FrecuenciaCotizadorResult.Respuesta[0];
     };
 }
 

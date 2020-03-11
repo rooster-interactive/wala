@@ -1,15 +1,24 @@
-import {Estafeta} from './couriers/estafeta';
+import {Estafeta} from './tracking/estafeta';
 
+/**
+ *
+ * @param courier
+ * @param tracking_code
+ * @constructor
+ */
 function Track(courier, tracking_code) {
 
     this.status = 'unknown';
     this.courier = courier;
     this.events = [];
     this.tracking_code = tracking_code;
-
-    console.log(this);
 }
 
+/**
+ *
+ * @param date
+ * @param description
+ */
 Track.prototype.addEvent = function (date, description) {
     this.events.push({
         date: date,
@@ -28,6 +37,10 @@ Track.prototype.getValidStatus = function () {
     ]
 };
 
+/**
+ *
+ * @returns {Promise<void>}
+ */
 Track.prototype.retrieveHistory = async function () {
     switch (this.courier) {
         case 'estafeta':

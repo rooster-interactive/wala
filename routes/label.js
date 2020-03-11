@@ -8,6 +8,9 @@ const supportedCouriers = ['estafeta'];
 
 router.post('/', [
     check('courier').isIn(supportedCouriers),
+    check('suscriber_id').exists().isNumeric(),
+    check('login').exists().isString(),
+    check('password').exists().isString(),
     check('weight').exists().isFloat(),
     check('content').exists().isString(),
     check('content_description').isString().optional({nullable: true}),
@@ -61,7 +64,7 @@ router.post('/', [
             response.status = false;
             response.message = "No se puede generar la etiqueta con esos parametros";
         } else {
-            response.data = tracking;
+            response.data = label;
         }
         res.status(200).json(response);
     } catch (err) {

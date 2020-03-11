@@ -7,8 +7,11 @@ const supportedCouriers = ['estafeta'];
 
 router.post('/', [
     check('courier').isIn(supportedCouriers),
-    check('zip_code_ori').exists().isLength({min: 3}),
-    check('zip_code_des').exists().isLength({min: 3}),
+    check('suscriber_id').exists().isNumeric(),
+    check('login').exists().isString(),
+    check('password').exists().isString(),
+    check('zip_code_ori').exists().isLength({min: 3}).isNumeric(),
+    check('zip_code_dest').exists().isLength({min: 3}).isNumeric(),
     check('weight').exists().isNumeric(),
     check('large').exists().isNumeric(),
     check('height').exists().isNumeric(),
@@ -17,17 +20,18 @@ router.post('/', [
     try {
         validationResult(req).throw();
 
-        let quoting = new Quote(req.query.courier, req.query.zip_cade_ori, req.query.zip_cade_dest, req.query.weight,
-            req.query.large, req.query.height, req.query.width);
+        let quoting = new Quote(req.body.suscriber_id, req.body.login, req.body.password, req.body.courier,
+            req.body.zip_code_ori, req.body.zip_code_dest, req.body.weight, req.body.large, req.body.height,
+            req.body.width);
 
-        await quoting.getQuote();
+        await quoting.retrieveHistory();
         let err = false;
 
         if (err) {
             response.status = false;
             response.message = "No se puede cotizar con esos ";
         } else {
-            response.data = tracking;
+            response.data = quoting;
         }
         res.status(200).json(response);
     } catch (err) {

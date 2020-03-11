@@ -7,14 +7,14 @@ const response = require('../constants/response');
 const Track = require('../services/track');
 const supportedCouriers = ['estafeta'];
 
-router.post('/', [
+router.get('/', [
   check('courier').isIn(supportedCouriers),
-  check('tracking_code').exists().length({min:22}),
+  check('trackingCode').exists().isLength({min:22}).isString(),
 ], async (req, res, next) => {
   try {
     validationResult(req).throw();
 
-    let tracking = new Track(req.query.courier, req.query.tracking_code);
+    let tracking = new Track(req.query.courier, req.query.trackingCode);
     
     await tracking.retrieveHistory();
     let err = false;
