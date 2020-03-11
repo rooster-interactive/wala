@@ -5,14 +5,14 @@ const response = require('../constants/response');
 const Quote = require('../services/quote');
 const supportedCouriers = ['estafeta'];
 
-router.get('/', [
+router.post('/', [
     check('courier').isIn(supportedCouriers),
-    check('zip_code_ori').exists(),
-    check('zip_code_des').exists(),
-    check('weight').exists(),
-    check('large').exists(),
-    check('height').exists(),
-    check('width').exists()
+    check('zip_code_ori').exists().isLength({min: 3}),
+    check('zip_code_des').exists().isLength({min: 3}),
+    check('weight').exists().isNumeric(),
+    check('large').exists().isNumeric(),
+    check('height').exists().isNumeric(),
+    check('width').exists().isNumeric()
 ], async (req, res, next) => {
     try {
         validationResult(req).throw();

@@ -7,9 +7,9 @@ const response = require('../constants/response');
 const Track = require('../services/track');
 const supportedCouriers = ['estafeta'];
 
-router.get('/', [
+router.post('/', [
   check('courier').isIn(supportedCouriers),
-  check('tracking_code').exists(),
+  check('tracking_code').exists().length({min:22}),
 ], async (req, res, next) => {
   try {
     validationResult(req).throw();
