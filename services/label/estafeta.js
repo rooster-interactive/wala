@@ -57,7 +57,6 @@ class Estafeta {
      * @returns {Promise<*>}
      */
     async getLabel() {
-        console.log(this);
         let result;
         let data = {
             originInfo: this.originInfo,
@@ -88,10 +87,10 @@ class Estafeta {
                 .then((client) => {
                     return client.createLabelAsync(data);
                 });
-            console.log(result);
         } catch (e) {
             console.error(e);
         }
+        console.log(result);
         return result;
     };
 }

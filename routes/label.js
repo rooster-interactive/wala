@@ -8,9 +8,6 @@ const supportedCouriers = ['estafeta'];
 
 router.post('/', [
     check('courier').isIn(supportedCouriers),
-    check('suscriber_id').exists().isNumeric(),
-    check('login').exists().isString(),
-    check('password').exists().isString(),
     check('weight').exists().isFloat(),
     check('content').exists().isString(),
     check('content_description').isString().optional({nullable: true}),

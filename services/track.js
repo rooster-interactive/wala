@@ -26,17 +26,6 @@ Track.prototype.addEvent = function (date, description) {
     });
 };
 
-Track.prototype.getValidStatus = function () {
-    return [
-        'created',
-        'picked',
-        'in_movement',
-        'with_delivery_man',
-        'failed_deliver',
-        'delivered'
-    ]
-};
-
 /**
  *
  * @returns {Promise<void>}
@@ -46,9 +35,8 @@ Track.prototype.retrieveHistory = async function () {
         case 'estafeta':
             let client = new Estafeta(this.tracking_code);
             let response = await client.getTracking();
-            console.log(response);
-            for(let event of response){
-               this.addEvent(new Date(event.eventDateTime), event.eventDescriptionSPA)
+            for (let event of response) {
+                this.addEvent(new Date(event.eventDateTime), event.eventDescriptionSPA)
             }
             break;
     }
