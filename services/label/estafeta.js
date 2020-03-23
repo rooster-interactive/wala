@@ -7,6 +7,7 @@ class Estafeta {
 
     /**
      *
+     * @param additionalInfo
      * @param numberOfLabels
      * @param returnDocument
      * @param weight
@@ -24,7 +25,7 @@ class Estafeta {
      * @param origin_info
      * @param destination_info
      */
-    constructor(numberOfLabels = 1, returnDocument = false, weight = 0.0, paperType = 1,
+    constructor(additionalInfo = '', numberOfLabels = 1, returnDocument = false, weight = 0.0, paperType = 1,
                 valid = true, content = '', contentDescription = '', costCenter = 'CCcost',
                 customerNumber = '0000000', deliveryToEstafetaOffice = false,
                 destinationCountryId = 'MX', effectiveDate = '20110525', quadrant = 0,
@@ -50,6 +51,7 @@ class Estafeta {
         this.originZipCodeForRouting = originZipCodeForRouting;
         this.originInfo = origin_info;
         this.destinationInfo = destination_info;
+        this.additionalInfo = additionalInfo;
     }
 
     /**
@@ -59,6 +61,7 @@ class Estafeta {
     async getLabel() {
         let result;
         let data = {
+            additionalInfo: this.additionalInfo,
             originInfo: this.originInfo,
             destinationInfo: this.destinationInfo,
             login: this.login,
@@ -87,11 +90,11 @@ class Estafeta {
                 .then((client) => {
                     return client.createLabelAsync(data);
                 });
+            console.log(result);
+            return result;
         } catch (e) {
             console.error(e);
         }
-        console.log(result);
-        return result;
     };
 }
 

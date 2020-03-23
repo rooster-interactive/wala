@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"courier\": \"estafeta\",\n\t\"weight\": 123123,\n\t\"content\": \"prueba\",\n\t\"delivery_estafeta_office\": false,\n\t\"origin_info\": {\n\t\"address1\": \"asasa\",\n\t\"cellphone\": \"1233231231\",\n\t\"city\": \"prueba\",\n\t\"neighborhood\": \"prueba\",\n\t\"state\": \"prueba\",\n\t\"zip_code\": \"44230\",\n\t\"contact\": \"prueba\"\n\t},\n\t\"destination_info\": {\n\t\"address1\": \"asasa\",\n\t\"cellphone\": \"1233231231\",\n\t\"neighborhood\": \"prueba\",\n\t\"state\": \"prueba\",\n\t\"zip_code\": \"44230\",\n\t\"city\": \"prueba\",\n\t\"contact\": \"prueba\"\n\t}\n\t\n}",
+					"raw": "{\n\t\"courier\": \"estafeta\",\n\t\"weight\": 123123,\n\t\"content\": \"prueba\",\n\t\"delivery_estafeta_office\": false,\n\t\"additionalInfo\": \"prueba\",\n\t\"origin_info\": {\n\t\"address1\": \"asasa\",\n\t\"cellphone\": \"1233231231\",\n\t\"city\": \"prueba\",\n\t\"neighborhood\": \"prueba\",\n\t\"state\": \"prueba\",\n\t\"zip_code\": \"44230\",\n\t\"contact\": \"prueba\",\n\t\"valid\": true\n\t},\n\t\"destination_info\": {\n\t\"address1\": \"asasa\",\n\t\"cellphone\": \"1233231231\",\n\t\"neighborhood\": \"prueba\",\n\t\"state\": \"prueba\",\n\t\"zip_code\": \"44230\",\n\t\"city\": \"prueba\",\n\t\"contact\": \"prueba\",\n\t\"valid\": true\n\t}\n\t\n}",
 					"options": {
 						"raw": {
 							"language": "json"

@@ -36,7 +36,7 @@ class Estafeta {
         }
     };
 
-    historyConfiguration(include = 1, configuration = 'ALL') {
+    historyConfiguration(include = 1, configuration = '') {
         return {
             includeHistory: include,
             historyType: configuration

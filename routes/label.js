@@ -9,6 +9,7 @@ const supportedCouriers = ['estafeta'];
 router.post('/', [
     check('courier').isIn(supportedCouriers),
     check('weight').exists().isFloat(),
+    check('additionalInfo').exists().isString(),
     check('content').exists().isString(),
     check('content_description').isString().optional({nullable: true}),
     check('customer_number').isNumeric().optional({nullable: true}).isLength({min: 7}),
@@ -27,6 +28,7 @@ router.post('/', [
     check('origin_info.neighborhood').isString().exists(),
     check('origin_info.phone_number').isNumeric().optional({nullable: true}).isLength({min: 8}),
     check('origin_info.state').isString().exists(),
+    check('origin_info.valid').isBoolean().exists(),
     check('origin_info.zip_code').isString().exists().isLength({min: 3}),
     check('destination_info.address1').isString().exists(),
     check('destination_info.address2').isString().optional({nullable: true}),
@@ -37,6 +39,7 @@ router.post('/', [
     check('destination_info.neighborhood').isString().exists(),
     check('destination_info.phone_number').isNumeric().optional({nullable: true}).isLength({min: 8}),
     check('destination_info.state').isString().exists(),
+    check('destination_info.valid').isBoolean().exists(),
     check('destination_info.zip_code').isString().exists().isLength({min: 3}),
 
 ], async (req, res, next) => {
@@ -44,13 +47,13 @@ router.post('/', [
         validationResult(req).throw();
 
         let {
-            courier, content, content_description, customer_number, weight, delivery_estafeta_office,
+            additionalInfo, courier, content, content_description, customer_number, weight, delivery_estafeta_office,
             destination_country_id, effective_date, return_document, quadrant, cost_center,
             origin_info, destination_info
         } = req.body;
 
 
-        let label = new Label(courier, content, content_description, customer_number, weight, delivery_estafeta_office,
+        let label = new Label(additionalInfo, courier, content, content_description, customer_number, weight, delivery_estafeta_office,
             destination_country_id, effective_date, return_document, quadrant, cost_center,
             origin_info, destination_info);
 

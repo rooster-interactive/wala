@@ -17,9 +17,10 @@ import {Estafeta} from './label/estafeta';
  * @param destination_info
  * @constructor
  */
-function Label(courier, content, content_description, customer_number, weight, delivery_estafeta_office,
+function Label(additionalInfo, courier, content, content_description, customer_number, weight, delivery_estafeta_office,
                destination_country_id, effective_date, return_document, quadrant, cost_center,
                origin_info, destination_info) {
+    this.additionalInfo = additionalInfo;
     this.courier = courier;
     this.content = content;
     this.content_description = content_description ? content_description : content;
@@ -51,14 +52,14 @@ Label.prototype.setResponse = function (response) {
 Label.prototype.retrieveHistory = async function () {
     switch (this.courier) {
         case 'estafeta':
-            try{
-                let client = new Estafeta(undefined, this.return_document, this.weight, undefined,
+            try {
+                let client = new Estafeta(this.additionalInfo,undefined, this.return_document, this.weight, undefined,
                     undefined, this.content, this.content_description, this.cost_center, this.customer_number,
                     this.delivery_estafeta_office, this.destination_country_id, this.effective_date, this.quadrant,
                     this.origin_info.zip_code, this.origin_info, this.destination_info);
                 let response = await client.getLabel();
                 this.setResponse(response);
-            }catch (e) {
+            } catch (e) {
                 console.error(e)
             }
             break;

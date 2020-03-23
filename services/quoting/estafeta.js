@@ -5,10 +5,10 @@ const url = String(process.env.IS_PRODUCTION) === "true"
 
 class Estafeta {
 
-    constructor(suscriber_id, login, password,zip_code_ori, zip_code_dest, weight, large, height, width) {
-        this.suscriberId = suscriber_id;
-        this.login = login;
-        this.password = password;
+    constructor(zip_code_ori, zip_code_dest, weight, large, height, width) {
+        this.idusuario = process.env.ESTAFETA_SUSCRIBER_ID_QUOTE;
+        this.usuario = process.env.ESTAFETA_USER_QUOTE;
+        this.contra = process.env.ESTAFETA_PASSWORD_QUOTE;
         this.weight = weight;
         this.large = large;
         this.height = height;
@@ -20,9 +20,9 @@ class Estafeta {
     async getQuote() {
         let result;
         let data = {
-            idusuario: this.suscriberId,
-            usuario: this.login,
-            contra: this.password,
+            idusuario: this.idusuario,
+            usuario: this.usuario,
+            contra: this.contra,
             esFrecuencia: false,
             esLista: true,
             tipoEnvio: {

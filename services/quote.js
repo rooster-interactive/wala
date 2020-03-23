@@ -1,9 +1,6 @@
 import {Estafeta} from './quoting/estafeta';
 
-function Quote(suscriber_id, login, password, courier, zip_code_ori, zip_code_dest, weight, large, height, width) {
-    this.suscriber_id = suscriber_id;
-    this.login = login;
-    this.password = password;
+function Quote(courier, zip_code_ori, zip_code_dest, weight, large, height, width) {
     this.courier = courier;
     this.zip_code_ori = zip_code_ori;
     this.zip_code_dest = zip_code_dest;
@@ -29,8 +26,7 @@ Quote.prototype.setResponse = function (response) {
 Quote.prototype.retrieveHistory = async function () {
     switch (this.courier) {
         case 'estafeta':
-            let client = new Estafeta(this.suscriber_id, this.login, this.password, this.zip_code_ori,
-                this.zip_code_dest, this.weight, this.large, this.height, this.width);
+            let client = new Estafeta(this.zip_code_ori, this.zip_code_dest, this.weight, this.large, this.height, this.width);
             let response = await client.getQuote();
             this.setResponse(response);
             break;

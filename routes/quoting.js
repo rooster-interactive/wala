@@ -7,9 +7,6 @@ const supportedCouriers = ['estafeta'];
 
 router.post('/', [
     check('courier').isIn(supportedCouriers),
-    check('suscriber_id').exists().isNumeric(),
-    check('login').exists().isString(),
-    check('password').exists().isString(),
     check('zip_code_ori').exists().isLength({min: 3}).isNumeric(),
     check('zip_code_dest').exists().isLength({min: 3}).isNumeric(),
     check('weight').exists().isNumeric(),
@@ -20,7 +17,7 @@ router.post('/', [
     try {
         validationResult(req).throw();
 
-        let quoting = new Quote(req.body.suscriber_id, req.body.login, req.body.password, req.body.courier,
+        let quoting = new Quote(req.body.courier,
             req.body.zip_code_ori, req.body.zip_code_dest, req.body.weight, req.body.large, req.body.height,
             req.body.width);
 
