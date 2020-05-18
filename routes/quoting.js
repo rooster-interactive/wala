@@ -22,14 +22,17 @@ router.post('/', [
             req.body.width);
 
         await quoting.retrieveHistory();
-        let err = false;
 
-        if (err) {
-            response.status = false;
-            response.message = "No se puede cotizar con esos ";
+
+        if (quoting.response.Error !== '000') {
+            let err = {};
+            err.status = 'error';
+            err.message = quoting.response.MensajeError;
+            throw err;
         } else {
             response.data = quoting;
         }
+
         res.status(200).json(response);
     } catch (err) {
         res.status(422).json(err);

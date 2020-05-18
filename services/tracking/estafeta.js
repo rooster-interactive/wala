@@ -36,7 +36,7 @@ class Estafeta {
         }
     };
 
-    historyConfiguration(include = 1, configuration = '') {
+    historyConfiguration(include = 1, configuration = 'ALL') {
         return {
             includeHistory: include,
             historyType: configuration
@@ -81,9 +81,8 @@ class Estafeta {
             .then((client) => {
                 return client.ExecuteQueryAsync(data);
             });
-            console.log(result);
         } catch (e) {
-            console.error(e);
+            console.log(e)
         }
         return result[0].ExecuteQueryResult.trackingData.TrackingData[0].history.History;
 

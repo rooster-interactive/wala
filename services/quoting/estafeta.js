@@ -45,10 +45,13 @@ class Estafeta {
                 .then((client) => {
                     return client.FrecuenciaCotizadorAsync(data);
                 });
+
+            return result[0].FrecuenciaCotizadorResult.Respuesta[0];
+
         } catch (e) {
             console.error(e);
         }
-        return result[0].FrecuenciaCotizadorResult.Respuesta[0];
+
     };
 }
 
