@@ -23,7 +23,6 @@ router.post('/', [
 
         await quoting.retrieveHistory();
 
-
         if (quoting.response.Error !== '000') {
             let err = {};
             err.status = 'error';

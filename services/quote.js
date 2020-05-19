@@ -24,14 +24,19 @@ Quote.prototype.setResponse = function (response) {
  * @returns {Promise<string>}
  */
 Quote.prototype.retrieveHistory = async function () {
-    switch (this.courier) {
-        case 'estafeta':
-            let client = new Estafeta(this.zip_code_ori, this.zip_code_dest, this.weight, this.large, this.height, this.width);
-            let response = await client.getQuote();
-            this.setResponse(response);
-            break;
-        default:
-            return 'no existe ese servicio';
+
+    try{
+        switch (this.courier) {
+            case 'estafeta':
+                let client = new Estafeta(this.zip_code_ori, this.zip_code_dest, this.weight, this.large, this.height, this.width);
+                let response = await client.getQuote();
+                this.setResponse(response);
+                break;
+            default:
+                return 'no existe ese servicio';
+        }
+    }catch (e) {
+        throw e;
     }
 };
 

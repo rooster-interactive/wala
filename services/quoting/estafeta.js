@@ -49,7 +49,7 @@ class Estafeta {
             return result[0].FrecuenciaCotizadorResult.Respuesta[0];
 
         } catch (e) {
-            console.error(e);
+            throw e;
         }
 
     };
