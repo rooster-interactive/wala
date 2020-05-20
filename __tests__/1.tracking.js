@@ -7,9 +7,9 @@ describe('Tracking endpoints', () => {
             .get('/track')
             .send({
                 courier: "estafeta",
-                tracking_code: '12345l',
+                tracking_code: '8055241528464720099314',
             });
-        expect(res.statusCode).toEqual(200)
+        expect(res.statusCode).toEqual(200);
         expect(res.body).toHaveProperty('status');
         expect(res.body).toHaveProperty('data');
         expect(res.body).toHaveProperty('message')

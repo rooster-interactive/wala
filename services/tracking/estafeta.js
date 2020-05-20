@@ -6,10 +6,9 @@ const url = String(process.env.IS_PRODUCTION) === "true"
 class Estafeta {
 
     constructor(bill) {
-      console.log(url);
-      this.suscriberId = process.env.ESTAFETA_SUSCRIBER_ID;
-      this.login = process.env.ESTAFETA_USER;
-      this.password = process.env.ESTAFETA_PASSWORD;
+      this.suscriberId = process.env.ESTAFETA_SUSCRIBER_ID_TRACK;
+      this.login = process.env.ESTAFETA_USER_TRACK;
+      this.password = process.env.ESTAFETA_PASSWORD_TRACK;
       this.bill = bill;
     }
 
@@ -44,14 +43,16 @@ class Estafeta {
         }
     };
 
-    filter(information = 0, type = 'ALL') {
+    filter(information = 0, type = '') {
         return {
             filterInformation: information,
             filterType: type
         }
     };
 
-    searchConfiguration(dimensions = 1, wayBillReplaceData = 0, returnDocumentData = 0, multipleServiceData = 0, internationalData = 0, signature = 0, customerInfo = 1) {
+    searchConfiguration(dimensions = 1, wayBillReplaceData = 0, returnDocumentData = 0,
+                        multipleServiceData = 0, internationalData = 0, signature = 0,
+                        customerInfo = 1) {
         return {
             includeDimensions: dimensions,
             includeWaybillReplaceData: wayBillReplaceData,
@@ -73,15 +74,15 @@ class Estafeta {
             searchType: this.searchType(),
             searchConfiguration: this.searchConfiguration()
         };
+        
         let result;
-
         try {
           result = await soap.createClientAsync(url)
             .then((client) => {
                 return client.ExecuteQueryAsync(data);
             });
         } catch (e) {
-            console.error(e);
+            console.log(e)
         }
         return result[0].ExecuteQueryResult.trackingData.TrackingData[0].history.History;
 

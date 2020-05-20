@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "62cb845a-88c4-41d9-a510-fc71b2c7cbc5",
+		"name": "estafeta",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "label",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"courier\": \"estafeta\",\n\t\"weight\": 123123,\n\t\"content\": \"prueba\",\n\t\"delivery_estafeta_office\": false,\n\t\"additionalInfo\": \"prueba\",\n\t\"origin_info\": {\n\t\"address1\": \"asasa\",\n\t\"cellphone\": \"1233231231\",\n\t\"city\": \"prueba\",\n\t\"neighborhood\": \"prueba\",\n\t\"state\": \"prueba\",\n\t\"zip_code\": \"44230\",\n\t\"contact\": \"prueba\",\n\t\"valid\": true\n\t},\n\t\"destination_info\": {\n\t\"address1\": \"asasa\",\n\t\"cellphone\": \"1233231231\",\n\t\"neighborhood\": \"prueba\",\n\t\"state\": \"prueba\",\n\t\"zip_code\": \"44230\",\n\t\"city\": \"prueba\",\n\t\"contact\": \"prueba\",\n\t\"valid\": true\n\t}\n\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/label",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"label"
+					]
+				},
+				"description": "prueba para label"
+			},
+			"response": []
+		},
+		{
+			"name": "quote",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"courier\": \"estafeta\",\n\t\"suscriber_id\": 1,\n\t\"login\": \"AdminUser\",\n\t\"password\": \",1,B(vVi\",\n\t\"zip_code_ori\": 62000,\n\t\"zip_code_dest\": 62580,\n\t\"weight\": 100,\n\t\"large\": 100,\n\t\"height\": 100,\n\t\"width\": 100\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/quote",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"quote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "tracking",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/track?courier=estafeta&trackingCode=8055241528464720099314",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"track"
+					],
+					"query": [
+						{
+							"key": "courier",
+							"value": "estafeta"
+						},
+						{
+							"key": "trackingCode",
+							"value": "8055241528464720099314"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
