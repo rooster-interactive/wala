@@ -27,10 +27,10 @@ class Estafeta {
             esLista: true,
             tipoEnvio: {
                 EsPaquete: true,
-                Peso: parseInt(this.weight),
-                Largo: parseInt(this.large),
-                Alto: parseInt(this.height),
-                Ancho: parseInt(this.width)
+                Peso: this.weight,
+                Largo: this.large,
+                Alto: this.height,
+                Ancho: this.width
             },
             datosOrigen: {
                 string: this.zip_code_ori
